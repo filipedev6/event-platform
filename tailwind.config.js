@@ -1,10 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      width: {
+        87: '348px',
+      },
+      fontFamily: {
+        sans: 'Roboto, sans-serif',
+      },
       colors: {
         green: {
           300: '#00B37E',
@@ -27,11 +31,10 @@ export default {
           500: '#323238',
           600: '#29292E',
           700: '#121214',
-          900: '#09090A'
-        }
+          900: '#09090A',
+        },
       },
     },
   },
   plugins: [],
 }
-
