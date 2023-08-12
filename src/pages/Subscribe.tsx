@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { Logo } from '../assets/Logo'
-import { gql, useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { useCreateSubscribeMutation } from '../graphql/generated'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const SubscribeSchemaData = z.object({
   name: z.string({
@@ -18,7 +18,9 @@ type SubscribeSchemaDataType = z.infer<typeof SubscribeSchemaData>
 
 export function Subscribe() {
   const navigate = useNavigate()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<SubscribeSchemaDataType>({
+    resolver: zodResolver(SubscribeSchemaData),
+  })
   const [createSubscribe, { loading }] = useCreateSubscribeMutation()
 
   async function handleSubscribeUser(data: SubscribeSchemaDataType) {
