@@ -3,6 +3,9 @@ export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        blur: 'url(/blur.png)',
+      },
       width: {
         87: '348px',
       },

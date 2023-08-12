@@ -52,7 +52,7 @@ export function Video({ lessonSlug }: VideoProps) {
   if (!data) {
     return (
       <div className="flex-1">
-        <h1>Carregando</h1>
+        <h1>Carregado...</h1>
       </div>
     )
   }
