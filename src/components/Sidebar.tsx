@@ -3,7 +3,7 @@ import { Lesson } from './Lesson'
 
 const GET_LESSONS_QUERY = gql`
   query Assets {
-    lessons(orderBy: availableAt_DESC, stage: PUBLISHED) {
+    lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
       id
       slug
       title
@@ -19,14 +19,12 @@ interface GetLessonsQueryResponse {
     title: string
     availableAt: string
     slug: string
-    lessonsType: 'class' | 'live'
+    lessonType: 'class' | 'live'
   }[]
 }
 
 export function Sidebar() {
   const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY)
-
-  console.log(data)
 
   return (
     <aside className="w-87 bg-gray-700 p-6 border-l border-gray-600">
@@ -39,7 +37,7 @@ export function Sidebar() {
           return (
             <Lesson
               title={lesson.title}
-              type={lesson.lessonsType}
+              type={lesson.lessonType}
               availableAt={new Date(lesson.availableAt)}
               slug={lesson.slug}
               key={lesson.id}
