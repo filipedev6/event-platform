@@ -3,14 +3,7 @@ import { Logo } from '../assets/Logo'
 import { gql, useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-
-const CREATE_SUBSCRIBE_MUTATION = gql`
-  mutation CreateSubscribe($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-    }
-  }
-`
+import { useCreateSubscribeMutation } from '../graphql/generated'
 
 const SubscribeSchemaData = z.object({
   name: z.string({
@@ -26,9 +19,7 @@ type SubscribeSchemaDataType = z.infer<typeof SubscribeSchemaData>
 export function Subscribe() {
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
-  const [createSubscribe, { loading }] = useMutation<SubscribeSchemaDataType>(
-    CREATE_SUBSCRIBE_MUTATION,
-  )
+  const [createSubscribe, { loading }] = useCreateSubscribeMutation()
 
   async function handleSubscribeUser(data: SubscribeSchemaDataType) {
     const { email, name } = data
