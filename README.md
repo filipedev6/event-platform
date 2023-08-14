@@ -1,4 +1,4 @@
-# GitHub Blog
+# Plataforma de Eventos - Ignite Lab
 
 ![preview](./src/assets/GIF/igniteLab.gif)
 
