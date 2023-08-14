@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { useCreateSubscribeMutation } from '../graphql/generated'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { CircleNotch } from '@phosphor-icons/react'
 
 const SubscribeSchemaData = z.object({
   name: z.string({
@@ -21,17 +22,23 @@ export function Subscribe() {
   const { register, handleSubmit } = useForm<SubscribeSchemaDataType>({
     resolver: zodResolver(SubscribeSchemaData),
   })
+
   const [createSubscribe, { loading }] = useCreateSubscribeMutation()
 
   async function handleSubscribeUser(data: SubscribeSchemaDataType) {
     const { email, name } = data
 
-    await createSubscribe({
+    const subscriberID = await createSubscribe({
       variables: {
         name,
         email,
       },
     })
+
+    localStorage.setItem(
+      '@ignite-lab-platform:user-1.0',
+      JSON.stringify(subscriberID.data?.createSubscriber?.id),
+    )
     navigate('/event')
   }
 
@@ -59,7 +66,6 @@ export function Subscribe() {
 
           <form
             onSubmit={handleSubmit(handleSubscribeUser)}
-            action=""
             className="flex flex-col gap-2 w-full"
           >
             <input
@@ -77,9 +83,10 @@ export function Subscribe() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
               Garantir minha vaga
+              {loading && <CircleNotch size={16} className="animate-spin" />}
             </button>
           </form>
         </div>
